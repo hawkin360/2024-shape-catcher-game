@@ -8,7 +8,7 @@ export class Player {
 		this.width = 75;
 		this.height = 25;
 
-		this.speed = 1;
+		this.speed = 5;
 
 		this.keyBindings = {
 			up: "ArrowUp",
@@ -96,6 +96,26 @@ export class Player {
 
 		this.x += this.speed * dirX;
 		this.y += this.speed * dirY;
+
+		// prevent going off left
+		if (this.x < 0) {
+			this.x = 0;
+		}
+
+		// prevent going off top
+		if (this.y < 0) {
+			this.y = 0;
+		}
+
+		// prevent from going off right
+		if (this.x + this.width > canvas.width) {
+			this.x = canvas.width - this.width;
+		}
+
+		// prevent from going off bottom
+		if (this.y + this.height > canvas.height) {
+			this.y = canvas.height - this.height;
+		}
 	}
 
 	draw() {
