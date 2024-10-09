@@ -2,7 +2,6 @@
 import { canvas, ctx } from "./common/canvas.js";
 import { GameManager } from "./game-manager.js";
 
-
 let game = new GameManager();
 game.initialize();
 

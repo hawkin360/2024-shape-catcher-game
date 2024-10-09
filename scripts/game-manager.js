@@ -1,5 +1,6 @@
 //@ts-check
 
+import { SimpleGoodItem } from "./collectables/good.js";
 import { canvas } from "./common/canvas.js";
 import { Player } from "./player.js";
 
@@ -11,51 +12,68 @@ export class GameManager {
 
 		this.isGameOver = false;
 
-        this.goodSpawn = {
-            lastTime: 0,
-            nextTime: Math.min(rand(15), 5),
-            getNewNext: function() {
-                this.nextTime = Math.min(rand(15), 5);
-            }
-        };
+		this.goodSpawn = {
+			lastTime: 0,
+			nextTime: 0,
+			next: function () {
+				this.lastTime = 0;
+				this.nextTime = rand(2 * 1000, 5 * 1000);
+			},
+		};
+
+		this.spawner(0);
 	}
 
 	initialize() {
 		this.players = [];
 		let p1 = new Player(canvas.width / 2, canvas.height / 2);
-        p1.x -= p1.width / 2;
-        p1.y -= p1.height / 2;
-        
+		p1.x -= p1.width / 2;
+		p1.y -= p1.height / 2;
+
 		this.players.push(p1);
 	}
 
-    update(elapsedTime) {
-        this.players.forEach(p => {
-            p.update();
-        })
+	update(elapsedTime) {
+		this.spawner(elapsedTime);
 
-        this.collectables.forEach(c => {
-            c.update(elapsedTime);
-        })
-    }
-    
-    spawner(elapsedTime) {
+		this.players.forEach((p) => {
+			p.update();
+		});
 
-    }
+		this.collectables.forEach((c) => {
+			c.update(elapsedTime);
+		});
+	}
 
-    draw() {
-        this.players.forEach(p => {
-            p.draw();
-        })
+	spawner(elapsedTime) {
+		this.goodSpawn.lastTime += elapsedTime;
 
-        this.collectables.forEach(c => {
-            c.draw();
-        })
-    }
+		if (this.goodSpawn.lastTime > this.goodSpawn.nextTime) {
+			// spawn a good item
+			const buffer = 50;
+			const sx = rand(buffer, canvas.width - buffer);
+			const sy = rand(buffer, canvas.height - buffer);
+			const item = new SimpleGoodItem(sx, sy);
+			this.collectables.push(item);
+			// reset the spawn timer and get a new spawn time
+			this.goodSpawn.next();
+			//debugger;
+		}
+	}
+
+	draw() {
+		this.players.forEach((p) => {
+			p.draw();
+		});
+
+		this.collectables.forEach((c) => {
+			c.draw();
+		});
+	}
 }
 
-
-function rand(max = 100) {
-    let r = Math.floor(Math.random() * max);
-    return r;
-} 
+function rand(min, max) {
+	let upper = max - min;
+	let r = Math.floor(Math.random() * upper) + min;
+	return r;
+}
