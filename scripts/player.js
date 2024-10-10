@@ -5,9 +5,10 @@ export class Player {
 	constructor(x = 0, y = 0) {
 		this.x = x;
 		this.y = y;
-		this.width = 75;
-		this.height = 25;
+		this.width = 50;
+		this.height = 50;
 
+		this.score = 0;
 		this.speed = 5;
 
 		this.keyBindings = {
@@ -25,6 +26,7 @@ export class Player {
 		};
 
 		this.wireUpKeyboard();
+		this.emoji = "😆";
 	}
 
 	wireUpKeyboard() {
@@ -119,7 +121,19 @@ export class Player {
 	}
 
 	draw() {
-		ctx.fillStyle = "blue";
-		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.save();
+		// ctx.fillStyle = "blue";
+		// ctx.fillRect(this.x, this.y, this.width, this.height);
+
+		ctx.font = `${this.width}px serif`;
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		//https://emojipedia.org/
+		ctx.fillText(
+			this.emoji,
+			this.x + this.width / 2,
+			this.y + this.height / 2 + 5
+		);
+		ctx.restore();
 	}
 }

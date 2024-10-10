@@ -1,4 +1,5 @@
 //@ts-check
+import { rand } from "../utilities.js";
 import { CollectableItem } from "./collectable-base.js";
 
 export class SimpleGoodItem extends CollectableItem {
@@ -8,26 +9,26 @@ export class SimpleGoodItem extends CollectableItem {
 		this.width = 25;
 		this.height = 25;
 
+		//this.emoji = "❤️";
+		const emojis = ["⭐", "❤️", "🪙"];
+		this.emoji = emojis[rand(0, emojis.length)];
+
 		this.despawnTime = 10 * 1000;
-		this.spawnInTime = 5 * 1000;
+		this.spawnInTime = 2 * 1000;
 		this.despawnWarningTime = 3 * 1000;
 
 		this.blink = {
-			interval: 500,
+			interval: 250,
 			lastBlink: 0,
 			isVisible: true,
 		};
 
 		this.lastAlphaTime = 0;
-		this.alpha = 0;
-
 		this.lifetime = 0;
-
-		this.color = "hsla(112, 100%, 50%, 0%)";
 	}
 
 	update(elapsedTime) {
-		if(!this.isCollectable) {
+		if (!this.isCollectable) {
 			return;
 		}
 
@@ -35,7 +36,9 @@ export class SimpleGoodItem extends CollectableItem {
 
 		if (this.lifetime < this.spawnInTime) {
 			// we have not fully spawned in yet
-			this.alpha = Math.floor((this.lifetime / this.spawnInTime) * 100);
+			this.alpha = this.lifetime / this.spawnInTime;
+		} else {
+			this.alpha = 1;
 		}
 
 		if (this.lifetime > this.despawnTime - this.despawnWarningTime) {
@@ -45,22 +48,21 @@ export class SimpleGoodItem extends CollectableItem {
 			this.blink.lastBlink += elapsedTime;
 			if (this.blink.lastBlink > this.blink.interval) {
 				if (this.blink.isVisible) {
-					console.log("blink off");
+					//console.log("blink off");
 
 					this.alpha = 0;
 				} else {
-					console.log("blink on");
-					this.alpha = 100;
+					// console.log("blink on");
+					this.alpha = 1;
 				}
 				this.blink.lastBlink = 0;
 				this.blink.isVisible = !this.blink.isVisible;
 			}
 		}
 
-		if(this.lifetime > this.despawnTime) {
+		if (this.lifetime > this.despawnTime) {
 			this.alpha = 0;
 			this.isCollectable = false;
 		}
-		this.color = `hsla(112, 100%, 50%, ${this.alpha}%)`;
 	}
 }

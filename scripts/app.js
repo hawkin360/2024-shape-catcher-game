@@ -6,7 +6,6 @@ let game = new GameManager();
 game.initialize();
 
 let lastTimestamp = 0;
-
 function gameLoop(timestamp) {
 	let elapsedTime = timestamp - lastTimestamp;
 	lastTimestamp = timestamp;
