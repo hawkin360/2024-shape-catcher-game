@@ -7,7 +7,7 @@ export class Enemy {
 		this.x = x;
 		this.y = y;
 
-		const emojis = ["💀", "😈", "🤡", "💩", "👺"];
+		const emojis = ["🦆", "🐒", "🦍", "🦧"];
 		this.emoji = emojis[rand(0, emojis.length)];
 		this.width = 40;
 		this.height = 40;

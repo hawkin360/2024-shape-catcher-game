@@ -26,7 +26,7 @@ export class Player {
 		};
 
 		this.wireUpKeyboard();
-		this.emoji = "😆";
+		this.emoji = "🐌";
 	}
 
 	wireUpKeyboard() {

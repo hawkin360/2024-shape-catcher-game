@@ -9,8 +9,7 @@ export class SimpleGoodItem extends CollectableItem {
 		this.width = 25;
 		this.height = 25;
 
-		//this.emoji = "❤️";
-		const emojis = ["⭐", "❤️", "🪙"];
+		const emojis = ["🎗️", "⛽", "☢️"];
 		this.emoji = emojis[rand(0, emojis.length)];
 
 		this.despawnTime = 10 * 1000;

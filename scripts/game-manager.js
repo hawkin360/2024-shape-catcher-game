@@ -56,7 +56,7 @@ export class GameManager {
 		let p2 = new Player(canvas.width / 2 + 50, canvas.height / 2);
 		p2.x -= p1.width / 2;
 		p2.y -= p1.height / 2;
-		p2.emoji = "🤩";
+		p2.emoji = "🥸";
 
 		this.players.push(p2);
 

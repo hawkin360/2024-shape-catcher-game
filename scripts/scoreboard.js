@@ -12,7 +12,7 @@ export class ScoreBoard {
 	draw() {
 		ctx.save();
 		ctx.globalAlpha = 0.5;
-		ctx.fillStyle = "yellow";
+		ctx.fillStyle = "green";
 		ctx.font = "50px fantasy";
 		ctx.textBaseline = "top";
 
